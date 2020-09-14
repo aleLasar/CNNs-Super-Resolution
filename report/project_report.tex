@@ -61,6 +61,19 @@ Alessio Lazzaron\\
 	The deep learning models capability is particularly suitable for this type of task because simpler approaches like bicubic interpolation use only local information in an LR image to compute pixel values in the corresponding SR image, deep learning approaches, on the other hand, learn mapping functions from LR images to HR images from a large number of examples.\\
 	In 2015 SRCCn... e continuare...
 	
+\section{Related work}
+Deep learning can be used to estimate the High Resolution (HR) image given a Low Resolution (LR) image. By using the HR image as a target (or ground-truth) and the LR image as an input, we can treat this like a supervised learning problem. There are a lot of approachs to affront this problem however most of them use CNNs because they get better performances.  Some approaches are listed below and represent a broad outline of the current state of the art.
+\subsection{Pre-upsampling}
+In this method, the low-resolution images are first interpolated to obtain a “coarse” high resolution image. Now, CNNs are used to learn an end-to-end mapping from the interpolated low resolution images to the high resolution images. The intuition was that it may be easier to first upsample the low-resolution images using traditional methods (such as Bicubic interpolation) and then refine the resultant than learn a direct mapping from a low-dimensional space to a high-dimensional space. The advantage is that since the upsampling is done by traditional methods, the CNN only needs to learn how to refine the coarse image, which is simpler.
+\subsection{Post-upsampling}
+This method works in reverse way respect to the previous one, indeed the low-resolution images are passed to the CNNs as such. Upsampling is performed in the last layer using a learnable layer. The advantage of this method is that feature extraction is performed in the lower dimensional space (before upsampling) and hence the computational complexity is reduced. Also, by using an learnable upsampling layer, the model can be trained end-to-end
+\subsection{Progressive upsampling}
+The above approchs use only a single upsampling convolution to not increase the computational complexity. This makes the learning process harder for large scaling factors. To avoid it these models  use a cascade of CNNs to progressively reconstruct high resolution images. By decomposing a difficult task into simpler tasks, the learning difficulty is greatly reduced and better performance can be obtained
+\subsection{Interative Up and Down sampling}
+Another popular model architecture is the hourglass structure that alternating between the process of upsampling and downsampling. These models can better find the deep relations between the LR-HR image pairs and thus provide higher quality reconstruction results.
+\subsection{Generative Adversarial Networks (GANs)}
+This type of network have been increasingly used for several image based applications including Super Resolution. GANs typically is composed of two neural networks: the Generator and the Discriminator, that dueling each other. Given a set of target samples, the Generator tries to produce samples that can fool the Discriminator into believing they are real. The Discriminator tries to recognize the real (target) samples from fake (generated) samples. At the end we obtaine a Generator that is really good at generating samples similar to the target samples.
+
 	
 
 \subsection{Language}
