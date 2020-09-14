@@ -74,9 +74,14 @@ Another popular model architecture is the hourglass structure that alternating b
 \subsection{Generative Adversarial Networks (GANs)}
 This type of network have been increasingly used for several image based applications including Super Resolution. GANs typically is composed of two neural networks: the Generator and the Discriminator, that dueling each other. Given a set of target samples, the Generator tries to produce samples that can fool the Discriminator into believing they are real. The Discriminator tries to recognize the real (target) samples from fake (generated) samples. At the end we obtaine a Generator that is really good at generating samples similar to the target samples.
 
-\section{Dataset}
-
 \section{Method}
+
+
+\section{Dataset}
+For our purpose we use three different dataset for the training phase, the first is \textit{T91} that is the smallest dataset, it contains 91 mixed images of small size that representing fruits, vegetables, objects and people. The second is \textit{General100} that contains 100 bmp-format images with no compression. The size of these 100 images ranges from 710 x 704, the largeest, to 131 x 112, the smallest. They are all of good quality with clear edges but fewer smooth regions (e.g., sky and ocean). And the third dataset is \textit{Berkeley Segmentation Dataset (BSDS200)}, ot contain 200 images and it is created for developing new boundary detection algorithms and for developing a benchmark for that task. For each neural network that we implement, we also adjust the number of epochs for the training phase, in fact, since the size of the datasets were different it was necessary to customize this hyperparamet to have, more or less, the same performances on the validation test and avoid overfitting. The validation set is obtained by split the dataset in two parts: the biggest one, almost the 80% of the dataset, for the training set, and the rest 20% for the validation set. However using different type of training set didn't change the models performance so much.
+To testing the performance of the models and to understand how much the models are able to reconstruct from the low-resolution images to high resolution images we use, as testing dataset, \textit{Set5} and \textit{Set14} that are common evaluation dataset  for Super Resolution task and contains various images of buildings to animal faces
+We don’t use directly the dataset but we apply some preprocessing. First off all we convert the training set’s images from RGB into YCbCr format because the models is training with only the luma, the brightness, of the images. After this, we normalize the images in order to have values between 0 and 1, so in this way we make the convergence of the loss function faster. The low-resolution images is made by down and up sampling the images, inside the dataset, with a bicubic interpolation and we analyze the model’s performance with different scale factors. Since we work in SISR task every images, so the low-resolution images for the training and the high resolution images as target value, are cropped in small images, that are called \textit{sub-images}, with fixed dimension.
+
 
 \section{Experiments}
 
