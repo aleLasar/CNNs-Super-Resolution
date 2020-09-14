@@ -75,8 +75,16 @@ Another popular model architecture is the hourglass structure that alternating b
 This type of network have been increasingly used for several image based applications including Super Resolution. GANs typically is composed of two neural networks: the Generator and the Discriminator, that dueling each other. Given a set of target samples, the Generator tries to produce samples that can fool the Discriminator into believing they are real. The Discriminator tries to recognize the real (target) samples from fake (generated) samples. At the end we obtaine a Generator that is really good at generating samples similar to the target samples.
 
 \section{Method}
-
-
+We want to verify if the complexity of the model increases also its performance do too. So we implement three convolutional neural network that are different for the complexity of the architecture.
+\subsection{SRCNN}
+The Super Resolution CNN is a convolutional neural network with three layer where the first layer has 64 filters and each of them as a dimension of 9x9, the second layer has 32 filters with dimension 1x1 and the output layer has only one filter with dimension 5x5. Every layer not have padding and for the first two layer we use a relu activation function and for the last layer we adopt a linear activation function. The loss, that the model want to minimize is the mean square error between the low resolution images and the output high resolution images, and it does this using stochastic gradient descent with the standard backpropagation. More precisely we adopt Adam as optimization algorithm 
+\begin{figure}[htp]
+    \centering
+    \includegraphics[scale=0.4]{img/srcnn.png}
+    \caption{Archittettura SRCNN}
+\end{figure}
+\subsection{FSRCNN}
+\subsection{VDSR}
 \section{Dataset}
 For our purpose we use three different dataset for the training phase, the first is \textit{T91} that is the smallest dataset, it contains 91 mixed images of small size that representing fruits, vegetables, objects and people. The second is \textit{General100} that contains 100 bmp-format images with no compression. The size of these 100 images ranges from 710 x 704, the largeest, to 131 x 112, the smallest. They are all of good quality with clear edges but fewer smooth regions (e.g., sky and ocean). And the third dataset is \textit{Berkeley Segmentation Dataset (BSDS200)}, ot contain 200 images and it is created for developing new boundary detection algorithms and for developing a benchmark for that task. For each neural network that we implement, we also adjust the number of epochs for the training phase, in fact, since the size of the datasets were different it was necessary to customize this hyperparamet to have, more or less, the same performances on the validation test and avoid overfitting. The validation set is obtained by split the dataset in two parts: the biggest one, almost the 80% of the dataset, for the training set, and the rest 20% for the validation set. However using different type of training set didn't change the models performance so much.
 To testing the performance of the models and to understand how much the models are able to reconstruct from the low-resolution images to high resolution images we use, as testing dataset, \textit{Set5} and \textit{Set14} that are common evaluation dataset  for Super Resolution task and contains various images of buildings to animal faces
