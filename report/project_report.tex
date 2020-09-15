@@ -167,10 +167,18 @@ Our aim is to verify if the increase of complexity, in the architectures used, a
 We trained SRCNN with 16024 input's patch and 5688 patch for the validation, also we used a learning rate as 
 0.001
 
-
+MANCA TABELLA 
+IMMAGINI RISULTATI
 
 
 \section{Conclusion}
+We can say that we have achieved our goal, which is to demonstrate that more complex networks achieve better results.
+Comparing our results with the various papers that we studied, we obtained lower PSNR and SSIM results for both the network output and the LR respect the original image, especially for factor scales other 2. We think it is due for use of anti aliasing in the preprocessing of the images used by the various papers.
+Furthermore, the reconstructed images of the various networks, especially for factor scales equal to 4, are not very good, so the network was unable to reconstruct the high resolution image.
+For SRCNN and FSRCNN we think it is due to an architecture
+too easy. Also to compare the results the networks were trained with T91, which is a rather small dataset, so better performance could be obtained with larger datasets,however we were limited by Colab's ability.
+The lack of data was felt more for VDSR which is a deeper network, however we were able to alleviate the effects by applying data argumentation.
+In conclusion we liked working on this type of task, because it has never been seen before, even if it was difficult to understand the functioning of the various networks based on the papers of the creators. There are deeper convolutional networks and other more effective methods to have better performance in the Super Resolution task that we have not been able to implement due to computational limitations.
 
 {\small
 \bibliographystyle{ieee_fullname}
