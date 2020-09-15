@@ -89,6 +89,13 @@ Also in deep models we use rotated images to create a larger dataset for the tra
 
 
 \section{Method}
+\begin{figure*}[]
+	\centering
+	\includegraphics[width=\textwidth]{img/fsrcnn.png}
+	\caption{Comparison between SRCNN and FSRCNN architectures \cite{dong2014image}}
+	\label{fsrcnn}
+\end{figure*}
+
 We want to verify if the complexity of the model increases also its performance do too. So we implement three convolutional neural network that are different for the complexity of the architecture.
 \subsection{SRCNN}
 The Super Resolution CNN \cite{dong2014image} is relatively simple and can see as an ordinary CNN that can approximates the complex mapping between the LR and HR spaces in an end-to-end way
@@ -101,12 +108,6 @@ As shown in figure \ref{fsrcnn}, SRCNN is composed by three main parts:
 So SRCNN has only three layer where the first layer has 64 filters and each of them as a dimension of 9x9, the second layer has 32 filters with dimension 1x1 and the output layer has only one filter with dimension 5x5. Every layer not have padding and for the first two layers we use a relu activation function and for the last layer we adopt a linear activation function. The loss that the model want to minimize is the mean square error, between the low resolution images and the output high resolution images, using stochastic gradient descent with the standard backpropagation. More precisely we adopt Adam as optimization algorithm 
 
 \subsection{FSRCNN}
-\begin{figure*}[]
-	\centering
-	\includegraphics[width=\textwidth]{img/fsrcnn.png}
-	\caption{Comparison between SRCNN and FSRCNN architectures \cite{dong2014image}}
-	\label{fsrcnn}
-\end{figure*}
 FSRCNN is presented by the authors like an evolution of SRCNN. The main goal of this architecture is to reduce the the time complexity of the output image computation.\\
 To solve the computational cost problem, the bicubic interpolation step computed in SRCNN is replaced with a deconvolutional layer. In FSRCNN there is no pre-processing and the the input is the low resolution image.\\
 As shown in figure \ref{fsrcnn}, FSRCNN is composed by five main parts:
@@ -136,6 +137,7 @@ Finally shrinking and expanding operations are able to reduce drastically the nu
 \end{figure*}
 Very Deep CNN exploits a large number of layers to restore image and improve quality.
 Its architecture includes a cascade of hidden layers which include small filters in equal number.\\
+Each hidden layer has 64 filters and each of them as a dimension of 3x3.
 The number of hidden layers is an hyperparameter.
 The main idea behind this network is the implementation of residual learning. In the previous models, the exact copy of the input has to go through all layers until it reaches the output layer. This becomes an end-to-end relation between input  and output and in a deep model can create serious problems such as difficult to train the network and vanishing/exploding gradients.
 The input of VDSR mis the interpolated image \textit{\textbf{x}} and the target is the high resolution image \textit{\textbf{y}}.
@@ -147,7 +149,18 @@ In the original paper they have demonstrated that is possible to train this netw
 
 
 \section{Experiments}
-
+We have implemented these three networks using python libraries:
+\begin{itemize}
+	\item OpenCV: Images processing;
+	\item Tensorflow: CNN building and training;
+\end{itemize}
+We have measured performance using classical image compression metrics:
+\begin{itemize}
+	\item Mean Squared Error (MSE) : The mean of squared  difference between ground truth image pixels and restored image pixels. The lower the MSE, the better the quality of the reconstructed image.
+	\item Peak Signal to Noise Ratio (PSNR) : Ratio between the maximum possible value and the value of distorsion in the image. Resolve the MSE problem, thT IS THE DEPENDENCE with the pixel scale. The higher the PSNR, the better the quality of the reconstructed image.
+	\item Structural similarity (SSIM) : method that measures the perceptual difference between two similar images. Unlike PSNR, SSIM is based on visible structures in the image. The higher the SSIM, the better the quality of the reconstructed image.
+	
+\end{itemize}
 \section{Conclusion}
 
 {\small
