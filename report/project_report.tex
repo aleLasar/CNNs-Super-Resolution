@@ -21,7 +21,7 @@
 
 % Pages are numbered in submission mode, and unnumbered in camera-ready
 %\ifcvprfinal\pagestyle{empty}\fi
-\setcounter{page}{4321}
+\setcounter{page}{1}
 \begin{document}
 
 %%%%%%%%% TITLE
@@ -98,10 +98,15 @@ As shown in figure \ref{fsrcnn}, SRCNN is composed by three main parts:
 	\item \textbf{Non-linear mapping:} maps each high-dimensional vector into another high-dimensional vector;
 	 \item \textbf{Reconstruction:} aggregates the above high-resolution patch representations to generate the final high-resolution image;
 \end{itemize}
-
 So SRCNN has only three layer where the first layer has 64 filters and each of them as a dimension of 9x9, the second layer has 32 filters with dimension 1x1 and the output layer has only one filter with dimension 5x5. Every layer not have padding and for the first two layers we use a relu activation function and for the last layer we adopt a linear activation function. The loss that the model want to minimize is the mean square error, between the low resolution images and the output high resolution images, using stochastic gradient descent with the standard backpropagation. More precisely we adopt Adam as optimization algorithm 
 
 \subsection{FSRCNN}
+\begin{figure*}[]
+	\centering
+	\includegraphics[width=\textwidth]{img/fsrcnn.png}
+	\caption{Comparison between SRCNN and FSRCNN architectures \cite{dong2014image}}
+	\label{fsrcnn}
+\end{figure*}
 FSRCNN is presented by the authors like an evolution of SRCNN. The main goal of this architecture is to reduce the the time complexity of the output image computation.\\
 To solve the computational cost problem, the bicubic interpolation step computed in SRCNN is replaced with a deconvolutional layer. In FSRCNN there is no pre-processing and the the input is the low resolution image.\\
 As shown in figure \ref{fsrcnn}, FSRCNN is composed by five main parts:
@@ -120,13 +125,23 @@ The non-linear mapping operation is composed by multiple smaller layers than the
 Finally shrinking and expanding operations are able to reduce drastically the number of parameters to learn during training. Smaller number of parameters and the low resolution input produce a faster output than SRCNN.\\
 
 
-\begin{figure*}[!]
-	\centering
-	\includegraphics[width=\textwidth]{img/fsrcnn.png}
-	\caption{Comparison between SRCNN and FSRCNN architectures \cite{dong2014image}}
-\end{figure*}
+
 
 \subsection{VDSR}
+\begin{figure*}[]
+	\centering
+	\includegraphics[width=\textwidth]{img/vdsr.png}
+	\caption{VDSR architecture\cite{kim2015accurate}}
+	\label{vdsr}
+\end{figure*}
+Very Deep CNN exploits a large number of layers to restore image and improve quality.
+Its architecture includes a cascade of hidden layers which include small filters in equal number.\\
+The main idea behind this network is the implementation of residual learning. In the previous models, the exact copy of the input has to go through all layers until it reaches the output layer. This becomes an end-to-end relation between input  and output and in a deep model creates serious problmes such as difficult to train the network and vanishing/exploding gradients.
+The input of VDSR mis the interpolated image \textit{\textbf{x}} and the target is the high resolution image \textit{\textbf{y}}.
+Since \textit{\textbf{x}} and \textit{\textbf{y}} are pretty similar we can learn only the residual image $\textbf{r} = \textbf{y} - \textbf{x}$ .\\
+After the generation of the output is possible reconstruct the HR image summing the interpolated image with the residual.
+
+
 
 
 
