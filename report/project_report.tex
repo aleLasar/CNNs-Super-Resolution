@@ -151,6 +151,35 @@ The authors of the original paper have demonstrated that is possible to train th
 
 
 \section{Experiments}
+\begin{table*}
+	\begin{center}
+		\begin{tabular}{|c| c| c| c| c| c| c| c| c| c|} 
+			
+			\hline
+			Dataset & Scale & Bicubic  & SRCNN & FSRCNN & VDSR\\ 
+			&  & PSNR/SSIM/MSE &PSNR/SSIM/MSE & PSNR/SSIM/MSE & PSNR/SSIM/MSE \\ 
+			\hline
+			\multirow{3}{*}{Set5} & $\times2$ & 33.075/0.909/46.008 & 34.033/0.920/32.594 & \textcolor{red}{34.463}/\textcolor{red}{0.948}/\textcolor{red}{28.766} & 33.807/0.945/36.023 \\
+			& $\times3$ & 28.286/0.824/142.542 & \textcolor{red}{29.027}/0.841/\textcolor{red}{110.992} & 28.941/\textcolor{red}{0.872}/114.039 & 28.766/0.870/ 122.674\\
+			& $\times4$ & 26.332/0.771/ 227.509 & \textcolor{red}{26.933}/0.790/\textcolor{red}{186.851} & 26.479/0.808/213.039 & 26.736/\textcolor{red}{0.818}/201.497 \\
+			\hline
+			\multirow{3}{*}{Set14} & $\times2$ & 29.243/0.852/100.793 & \textcolor{red}{30.028}/0.854/91.442 & 29.991/\textcolor{red}{0.895}/\textcolor{red}{89.389} & 29.661/0.860/94.007 \\
+			& $\times3$ & 24.896/0.728/267.894 & \textcolor{red}{25.678}/0.732/\textcolor{red}{240.882} & 25.333/\textcolor{red}{0.768}/246.676 &25.199/0.738/252.547 \\
+			& $\times4$ &23.388/0.667/369.691 & \textcolor{red}{24.172}/0.672/\textcolor{red}{330.994} & 23.654/\textcolor{red}{0.697}/352.55 & 23.682/0.678/348.158 \\
+			\hline
+		\end{tabular}
+		\label{results}
+	\end{center}
+	\caption{Results. \textcolor{red}{Red color: Best performance}}
+\end{table*}
+
+\begin{figure*}[]
+	\centering
+	\includegraphics[width=\textwidth]{img/RESULTS.png}
+	\caption{A graphical comparison of the restored images}
+	\label{imgres}
+\end{figure*}
+
 We have implemented these three networks using Python language and tools described above:
 \begin{itemize}
 	\item OpenCV: Images processing;
@@ -189,44 +218,22 @@ In table \ref{param} we report final configurations.
 \caption{Hyperparameters summary}
 \end{table}
 
-\begin{table*}
-\begin{center}
-	\begin{tabular}{|c| c| c| c| c| c| c| c| c| c|} 
-		
-		\hline
-		Dataset & Scale & Bicubic  & SRCNN & FSRCNN & VDSR\\ 
-		 &  & PSNR/SSIM/MSE &PSNR/SSIM/MSE & PSNR/SSIM/MSE & PSNR/SSIM/MSE \\ 
-		\hline
-		\multirow{3}{*}{Set5} & $\times2$ & 33.075/0.909/46.008 & 34.033/0.920/32.594 & \textcolor{red}{34.463}/\textcolor{red}{0.948}/\textcolor{red}{28.766} & 33.807/0.945/36.023 \\
-		 									& $\times3$ & 28.286/0.824/142.542 & \textcolor{red}{29.027}/0.841/\textcolor{red}{110.992} & 28.941/\textcolor{red}{0.872}/114.039 & 28.766/0.870/ 122.674\\
-		 									& $\times4$ & 26.332/0.771/ 227.509 & \textcolor{red}{26.933}/0.790/\textcolor{red}{186.851} & 26.479/0.808/213.039 & 26.736/\textcolor{red}{0.818}/201.497 \\
-		\hline
-		\multirow{3}{*}{Set14} & $\times2$ & 29.243/0.852/100.793 & \textcolor{red}{30.028}/0.854/91.442 & 29.991/\textcolor{red}{0.895}/\textcolor{red}{89.389} & 29.661/0.860/94.007 \\
-											& $\times3$ & 24.896/0.728/267.894 & \textcolor{red}{25.678}/0.732/\textcolor{red}{240.882} & 25.333/\textcolor{red}{0.768}/246.676 &25.199/0.738/252.547 \\
-											& $\times4$ &23.388/0.667/369.691 & \textcolor{red}{24.172}/0.672/\textcolor{red}{330.994} & 23.654/\textcolor{red}{0.697}/352.55 & 23.682/0.678/348.158 \\
-		\hline
-	\end{tabular}
-\label{results}
-\end{center}
-\caption{Results. \textcolor{red}{Red color: Best performance}}
-\end{table*}
-IMMAGINI RISULTATI
-\begin{figure*}[]
-	\centering
-	\includegraphics[width=\textwidth]{img/RESULTS.png}
-	\caption{A graphical comparison of the restored images}
-	\label{imgres}
-\end{figure*}
+In figure \ref{imgres} is shown a graphical comparison between output of each network and ground truth.\\
+We can see that all networks restore part of details lost in the low resolution image. As we aspect, bicubic interpolation increase resolution but not create details.\\
+Seeing restored images the ouputs of the three networks look similar.\\
+
+
+
 
 
 \section{Conclusion}
-We can say that we have achieved our goal, which is to demonstrate that more complex networks achieve better results.
-Comparing our results with the various papers that we studied, we obtained lower PSNR and SSIM results for both the network output and the LR respect the original image, especially for factor scales other 2. We think it is due for use of anti aliasing in the preprocessing of the images used by the various papers.
-Furthermore, the reconstructed images of the various networks, especially for factor scales equal to 4, are not very good, so the network was unable to reconstruct the high resolution image.
-For SRCNN and FSRCNN we think it is due to an architecture
-too easy. Also to compare the results the networks were trained with T91, which is a rather small dataset, so better performance could be obtained with larger datasets,however we were limited by Colab's ability.
-The lack of data was felt more for VDSR which is a deeper network, however we were able to alleviate the effects by applying data argumentation.
+Comparing our results with the original papers that we studied, we obtained lower PSNR and SSIM results for both the network output and the interpolated LR respect the original image, especially for factor scales other 2.\\
+To compare the results the networks were trained with T91, which is a rather small dataset, so better performance could be obtained with larger datasets,however we were limited by Colab's ability.\\
+The lack of data was felt more for VDSR which is a deeper network, however we were able to alleviate the effects by applying data argumentation.\\
+Also we think that the lower performance of the interpolated image in respect of the original papers is due for use of anti aliasing in the preprocessing of the images in MATLAB resizing functions.
+Furthermore, the reconstructed images of the various networks, especially for factor scales equal to 4, are not very good, but better than interpolation methods.\\
 In conclusion we liked working on this type of task, because it has never been seen before, even if it was difficult to understand the functioning of the various networks based on the papers of the creators. There are deeper convolutional networks and other more effective methods to have better performance in the Super Resolution task that we have not been able to implement due to computational limitations.
+
 
 {\small
 \bibliographystyle{ieee_fullname}
