@@ -136,11 +136,12 @@ Finally shrinking and expanding operations are able to reduce drastically the nu
 \end{figure*}
 Very Deep CNN exploits a large number of layers to restore image and improve quality.
 Its architecture includes a cascade of hidden layers which include small filters in equal number.\\
+The number of hidden layers is an hyperparameter.
 The main idea behind this network is the implementation of residual learning. In the previous models, the exact copy of the input has to go through all layers until it reaches the output layer. This becomes an end-to-end relation between input  and output and in a deep model can create serious problems such as difficult to train the network and vanishing/exploding gradients.
 The input of VDSR mis the interpolated image \textit{\textbf{x}} and the target is the high resolution image \textit{\textbf{y}}.
 Since \textit{\textbf{x}} and \textit{\textbf{y}} are pretty similar we can learn only the residual image $\textbf{r} = \textbf{y} - \textbf{x}$ .\\
-After the generation of the output is possible to reconstruct the HR image summing the interpolated image with the residual.
-
+After the generation of the output is possible to reconstruct the HR image summing the interpolated image with the residual.\\
+In the original paper they have demonstrated that is possible to train this network to learn Super Resolution in  different scale factors if we train the network with a dataset that contains images down-sampled in multiple scale factors.
 
 
 
