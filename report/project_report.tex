@@ -7,6 +7,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{tabularx}
+\usepackage{multirow}
 
 % Include other packages here, before hyperref.
 
@@ -150,26 +151,68 @@ In the original paper they have demonstrated that is possible to train this netw
 
 
 \section{Experiments}
-We have implemented these three networks using python libraries:
+We have implemented these three networks using Python language and tools described above:
 \begin{itemize}
 	\item OpenCV: Images processing;
 	\item Tensorflow: CNN building and training;
-	\item Skimage: Computing metrics;
-	\item Google Colab: Development environment, although the free version is limited, the computing power is superior to normal laptops
+	\item Scikit-image : Metrics computation;
+	\item Google Colab: Cloud computing service, although the free version is limited, the computing power is superior to our laptops due to the GPU computing
 \end{itemize}
+Our aim is to verify if the increase of complexity, in the architectures used, also brings a considerable increase on the performance in the SISR task.\\
 We have measured performance using classical image compression metrics:
 \begin{itemize}
 	\item Mean Squared Error (MSE) : The mean of squared  difference between ground truth image pixels and restored image pixels. The lower the MSE, the better the quality of the reconstructed image.
 	\item Peak Signal to Noise Ratio (PSNR) : Ratio between the maximum possible value and the value of distorsion in the image. Resolve the MSE problem, that is the dependence with the pixel scale. The higher the PSNR, the better the quality of the reconstructed image.
 	\item Structural similarity (SSIM) : method that measures the perceptual difference between two similar images. Unlike PSNR, SSIM is based on visible structures in the image. The higher the SSIM, the better the quality of the reconstructed image.
 \end{itemize}
-Our aim is to verify if the increase of complexity, in the architectures used, also brings a considerable increase on the performance in the SISR task. To compare the results between the different models and the papers we trained all the network with T91.
-We trained SRCNN with 16024 input's patch and 5688 patch for the validation, also we used a learning rate as 
-0.001
+
+In order to realize a fair comparison between the three models we trained all of them with T91 dataset but different data augmentation such as different number of patches extracted.\\
+For SRCNN we extracted about 20000 patches, for FSRCNN the number increased to 30000 and for VDSR, the deeper network, we used 40000 patches.\\
+All CNNs are trained with  Adam algorithm \cite{kingma2014adam} and we have done different trials with different learning rates, batch sizes and number of epochs.\\
+In table \ref{param} we report final configurations.
+\begin{table}[h!]
+\begin{center}
+	\begin{tabular}{|c| c| c| c| c|} 
+		
+		\hline
+		& Layers & Learning rate & batch size & epochs \\ 
+		\hline
+		SRCNN & 3 & 0.001 & 256 & 400 \\
+		\hline
+		FSRCNN & 6 & 0.001 & 64 & 100\\
+		\hline
+		VDSR & 10 & 0.0001 & 64 & 50\\
+		\hline
+	\end{tabular}
+\label{param}
+\end{center}
+\caption{Hyperparameters summary}
+\end{table}
 
 MANCA PARTE DI FSRCNN E VDSR
 
 MANCA TABELLA 
+\begin{table*}
+\begin{center}
+	\begin{tabular}{|c| c| c| c| c| c| c| c| c| c|} 
+		
+		\hline
+		Dataset & Scale & Bicubic  & SRCNN & FSRCNN & VDSR\\ 
+		 &  & PSNR/SSIM/MSE &PSNR/SSIM/MSE & PSNR/SSIM/MSE & PSNR/SSIM/MSE \\ 
+		\hline
+		\multirow{3}{*}{Set5} & $\times2$ & 33.075/0.909/46.008 & 256 & 400 & caio\\
+		 									& $\times3$ & 0.001 & 256 & 400 & asda\\
+		 									& $\times4$ & 0.001 & 256 & 400 &asda\\
+		\hline
+		\multirow{3}{*}{Set14} & $\times2$ & 0.001 & 256 & 400 &asd\\
+											& $\times3$ & 0.001 & 256 & 400 &asd\\
+											& $\times4$ & 0.001 & 256 & 400 &asda\\
+		\hline
+	\end{tabular}
+\label{results}
+\end{center}
+\caption{Hyperparameters summary}
+\end{table*}
 IMMAGINI RISULTATI
 
 
