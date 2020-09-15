@@ -91,7 +91,15 @@ Also in deep models we use rotated images to create a larger dataset for the tra
 \section{Method}
 We want to verify if the complexity of the model increases also its performance do too. So we implement three convolutional neural network that are different for the complexity of the architecture.
 \subsection{SRCNN}
-The Super Resolution CNN \cite{dong2014image} is a convolutional neural network with three layer where the first layer has 64 filters and each of them as a dimension of 9x9, the second layer has 32 filters with dimension 1x1 and the output layer has only one filter with dimension 5x5. Every layer not have padding and for the first two layer we use a relu activation function and for the last layer we adopt a linear activation function. The loss, that the model want to minimize is the mean square error between the low resolution images and the output high resolution images, and it does this using stochastic gradient descent with the standard backpropagation. More precisely we adopt Adam as optimization algorithm 
+The Super Resolution CNN \cite{dong2014image} is relatively simple and can see as an ordinary CNN that can approximates the complex mapping between the LR and HR spaces in an end-to-end way
+As shown in figure \ref{fsrcnn}, SRCNN is composed by three main parts:
+\begin{itemize}
+	\item \textbf{Patch extraction and representation:} extracts patches from the low-resolution image  and represents each patch as a high-dimensional vector;
+	\item \textbf{Non-linear mapping:} maps each high-dimensional vector into another high-dimensional vector;
+	 \item \textbf{Reconstruction:} aggregates the above high-resolution patch representations to generate the final high-resolution image;
+\end{itemize}
+
+So SRCNN has only three layer where the first layer has 64 filters and each of them as a dimension of 9x9, the second layer has 32 filters with dimension 1x1 and the output layer has only one filter with dimension 5x5. Every layer not have padding and for the first two layers we use a relu activation function and for the last layer we adopt a linear activation function. The loss that the model want to minimize is the mean square error, between the low resolution images and the output high resolution images, using stochastic gradient descent with the standard backpropagation. More precisely we adopt Adam as optimization algorithm 
 
 \subsection{FSRCNN}
 FSRCNN is presented by the authors like an evolution of SRCNN. The main goal of this architecture is to reduce the the time complexity of the output image computation.\\
