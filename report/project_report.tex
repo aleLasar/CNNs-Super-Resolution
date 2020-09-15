@@ -6,6 +6,7 @@
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{tabularx}
 
 % Include other packages here, before hyperref.
 
@@ -77,7 +78,7 @@ Another popular model architecture is the hourglass structure that alternating b
 This type of network have been increasingly used for several image based applications including Super Resolution. GANs typically is composed of two neural networks: the Generator and the Discriminator, that dueling each other in a zero-sum game. Given a set of target samples, the Generator tries to produce samples that can fool the Discriminator into believing they are real. The Discriminator tries to recognize the real (target) samples from fake (generated) samples. At the end we obtain a Generator that is really good at generating samples similar to the target samples.
 
 \section{Dataset}
-For our purpose we use three different dataset, the first is \textit{T91} that is the smallest dataset, it contains 91 mixed images of small size that representing fruits, vegetables, objects and people. The second is \textit{General100} that contains 100 bmp-format images with no compression. The size of these 100 images ranges from 710 x 704, the largest, to 131 x 112, the smallest. And the third dataset is \textit{Berkeley Segmentation Dataset (BSDS200)}, ot contain 200 images and it is created for developing new boundary detection algorithms and for developing a benchmark for that task. For each neural network that we implement, we also adjust the number of epochs for the training phase, in fact, since the size of the datasets were different it was necessary to customize this hyperparameters to have, more or less, the same performances on the validation test and avoid overfitting. The validation set is obtained by split the dataset in two parts: the biggest one, almost the 80\% of the dataset, for the training set, and the rest 20\% for the validation set. However using different type of training set didn't change the models performance so much.\\
+For our purpose we use three different dataset, the first is \textit{T91} that is the smallest dataset, it contains 91 mixed images of small size that representing fruits, vegetables, objects and people, every images is in Bitmap format. The second is \textit{General100} that contains 100 bmp-format images with no compression. The size of these 100 images ranges from 710 x 704, the largest, to 131 x 112, the smallest. And the third dataset is \textit{Berkeley Segmentation Dataset (BSDS200)}, ot contain 200 images and it is created for developing new boundary detection algorithms and for developing a benchmark for that task. For each neural network that we implement, we also adjust the number of epochs for the training phase, in fact, since the size of the datasets were different it was necessary to customize this hyperparameters to have, more or less, the same performances on the validation test and avoid overfitting. The validation set is obtained by split the dataset in two parts: the biggest one, almost the 80\% of the dataset, for the training set, and the rest 20\% for the validation set. However using different type of training set didn't change the models performance so much.\\
 To testing the performance of the models and to understand how much the models are able to reconstruct from the low-resolution images to high resolution images we use, as testing dataset, \textit{Set5} and \textit{Set14} that are common evaluation dataset  for Super Resolution task and contains various images of buildings to animal faces.\\
 Official web pages of SRCNN, FSRCNN and VDSR provide all datasets used.
 We don’t use directly the dataset but we apply some preprocessing. First off all we convert the training set’s images from RGB into YCbCr format because the models is training with only the luma, the brightness, of the images. After this, we normalize the images in order to have floating point values between 0 and 1, so in this way we make the convergence of the loss function faster. The low-resolution images is made by down and up sampling the images, inside the dataset, with a bicubic interpolation and we analyze the model’s performance with different scale factors.\\
@@ -153,14 +154,22 @@ We have implemented these three networks using python libraries:
 \begin{itemize}
 	\item OpenCV: Images processing;
 	\item Tensorflow: CNN building and training;
+	\item Skimage: Computing metrics;
+	\item Google Colab: Development environment, although the free version is limited, the computing power is superior to normal laptops
 \end{itemize}
 We have measured performance using classical image compression metrics:
 \begin{itemize}
 	\item Mean Squared Error (MSE) : The mean of squared  difference between ground truth image pixels and restored image pixels. The lower the MSE, the better the quality of the reconstructed image.
-	\item Peak Signal to Noise Ratio (PSNR) : Ratio between the maximum possible value and the value of distorsion in the image. Resolve the MSE problem, thT IS THE DEPENDENCE with the pixel scale. The higher the PSNR, the better the quality of the reconstructed image.
+	\item Peak Signal to Noise Ratio (PSNR) : Ratio between the maximum possible value and the value of distorsion in the image. Resolve the MSE problem, that is the dependence with the pixel scale. The higher the PSNR, the better the quality of the reconstructed image.
 	\item Structural similarity (SSIM) : method that measures the perceptual difference between two similar images. Unlike PSNR, SSIM is based on visible structures in the image. The higher the SSIM, the better the quality of the reconstructed image.
-	
 \end{itemize}
+Our aim is to verify if the increase of complexity, in the architectures used, also brings a considerable increase on the performance in the SISR task. To compare the results between the different models and the papers we trained all the network with T91.
+We trained SRCNN with 16024 input's patch and 5688 patch for the validation, also we used a learning rate as 
+0.001
+
+
+
+
 \section{Conclusion}
 
 {\small
