@@ -189,10 +189,13 @@ In table \ref{param} we report final configurations.
 \caption{Hyperparameters summary}
 \end{table}
 
-MANCA PARTE DI FSRCNN E VDSR
+Table \ref{results} shows the results for each metric and each scale factor.\\
+ In general we can see that in relation to PSNR and MSE the best network we implemented is SRCNN while for SSIM is FSRCNN.\\
+ PSNR and MSE are correlated so it is normal that the same network win on these two metrics.
+ 
+ 
 
-MANCA TABELLA 
-\begin{table*}
+\begin{table*}[h!]
 \begin{center}
 	\begin{tabular}{|c| c| c| c| c| c| c| c| c| c|} 
 		
@@ -213,8 +216,14 @@ MANCA TABELLA
 \end{center}
 \caption{Results. \textcolor{red}{Red color: Best performance}}
 \end{table*}
-IMMAGINI RISULTATI
-\begin{figure*}[]
+
+
+In figure \ref{imgres} is shown a graphical comparison between output of each network and ground truth.\\
+We can see that all networks restore part of details lost in the low resolution image. As we aspected bicubic interpolation increase resolution but not create details.\\
+Seeing restored images they seems more or less similar.
+
+
+\begin{figure*}[h!]
 	\centering
 	\includegraphics[width=\textwidth]{img/RESULTS.png}
 	\caption{A graphical comparison of the restored images}
@@ -223,12 +232,12 @@ IMMAGINI RISULTATI
 
 
 \section{Conclusion}
-We can say that we have achieved our goal, which is to demonstrate that more complex networks achieve better results.
-Comparing our results with the various papers that we studied, we obtained lower PSNR and SSIM results for both the network output and the LR respect the original image, especially for factor scales other 2. We think it is due for use of anti aliasing in the preprocessing of the images used by the various papers.
-Furthermore, the reconstructed images of the various networks, especially for factor scales equal to 4, are not very good, so the network was unable to reconstruct the high resolution image.
-For SRCNN and FSRCNN we think it is due to an architecture
-too easy. Also to compare the results the networks were trained with T91, which is a rather small dataset, so better performance could be obtained with larger datasets,however we were limited by Colab's ability.
-The lack of data was felt more for VDSR which is a deeper network, however we were able to alleviate the effects by applying data argumentation.
+Comparing our results with the original papers that we studied, we obtained lower PSNR and SSIM results for both the network output and the interpolated LR respect the original image, especially for factor scales other 2.\\
+To compare the results the networks were trained with T91, which is a rather small dataset, so better performance could be obtained with larger datasets,however we were limited by Colab's ability.\\
+The lack of data was felt more for VDSR which is a deeper network, however we were able to alleviate the effects by applying data argumentation.\\
+Also we think that the lower performance of the interpolated image in respect of the original papers is due for use of anti aliasing in the preprocessing of the images in MATLAB resizing functions.
+Furthermore, the reconstructed images of the various networks, especially for factor scales equal to 4, are not very good, but better than interpolation methods.\\
+
 In conclusion we liked working on this type of task, because it has never been seen before, even if it was difficult to understand the functioning of the various networks based on the papers of the creators. There are deeper convolutional networks and other more effective methods to have better performance in the Super Resolution task that we have not been able to implement due to computational limitations.
 
 {\small
